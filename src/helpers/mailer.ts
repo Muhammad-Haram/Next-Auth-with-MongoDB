@@ -33,7 +33,7 @@ export const sentEmail = async ({ email, emailType, userId }: any) => {
       to: email,
       subject:
         emailType === "VERIFY" ? "Verified your email" : "Reset your password",
-      html: verifyHtml,
+      html: verifyHtml, 
     };
 
     const mailResponse = await transporter.sendMail(mailOptions);
