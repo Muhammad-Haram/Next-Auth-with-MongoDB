@@ -36,3 +36,21 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
 hi
+
+route bolierplate
+
+import { connect } from "@/dbConfig/dbConfig";
+import User from "@/models/userModel";
+import { NextRequest, NextResponse } from "next/server";
+import bcryptjs from "bcryptjs";
+import { sentEmail } from "@/helpers/mailer";
+
+connect();
+
+export async function POST(request: NextRequest) {
+    try {
+
+    } catch (error: any) {
+        return NextResponse.json({ error: error.message }, { status: 500 })
+    }
+}
