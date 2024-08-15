@@ -32,12 +32,14 @@ export async function POST(request: NextRequest) {
     console.log(savedUser);
 
     //Sent Verifiation Email
-    await sentEmail({ email, emailType: "VERIFY", userId: savedUser._id });
+    const userId = savedUser._id;
+    console.log(userId)
+    await sentEmail({ email, emailType: "VERIFY", userId: userId });
 
     return NextResponse.json({
-        message:"User Registered successfully",
-        success: true,
-        savedUser
+      message: "User Registered successfully",
+      success: true,
+      savedUser
     })
 
 
