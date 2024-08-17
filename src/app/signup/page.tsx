@@ -10,9 +10,9 @@ export default function SignupPage() {
 
   const router = useRouter();
   const [user, setUser] = useState({
+    username: "",
     email: "",
     password: "",
-    username: ""
   });
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -56,7 +56,7 @@ export default function SignupPage() {
               <form className="mt-8 space-y-4">
 
                 <div>
-                  <label className="text-gray-800 text-sm mb-2 block">User name</label>
+                  <label className="text-gray-800 text-sm mb-2 block">Username</label>
                   <div className="relative flex items-center">
                     <input id="username" type="text" required className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder="Enter username" value={user.username}
                       onChange={(e) => setUser({ ...user, username: e.target.value })} />

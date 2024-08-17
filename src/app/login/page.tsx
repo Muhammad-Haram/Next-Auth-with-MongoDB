@@ -1,9 +1,98 @@
-import React from 'react'
+"use client"
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
-const page = () => {
+
+export default function LoginPage() {
+
+  const router = useRouter();
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
+  const [buttonDisabled, setButtonDisabled] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+
+  const onLogin = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.post("/api/users/login", user);
+      console.log("Login Success" + response.data);
+      router.push('/profile');
+    }
+
+    catch (error: any) {
+      console.log("Login Failed");
+      toast.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+
+    if (user.email.length > 0 && user.password.length > 0) {
+      setButtonDisabled(false);
+    } else {
+      setButtonDisabled(true)
+    };
+
+  }, [user]);
+
   return (
-    <div>Login in</div>
+    <>
+
+      <div className="bg-gray-50 font-[sans-serif]">
+        <div className="min-h-screen flex flex-col items-center justify-center py-6 px-4">
+          <div className="max-w-md w-full">
+
+            <div className="p-8 rounded-2xl bg-white shadow">
+              <h2 className="text-gray-800 text-center text-2xl font-bold">{loading ? "Processing..." : "Login"}</h2>
+
+
+              <form className="mt-8 space-y-4">
+
+                <div>
+                  <label className="text-gray-800 text-sm mb-2 block">Email</label>
+                  <div className="relative flex items-center">
+                    <input id="email" type="email" required className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder="Enter Email" value={user.email}
+                      onChange={(e) => setUser({ ...user, email: e.target.value })} />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="text-gray-800 text-sm mb-2 block">Password</label>
+                  <div className="relative flex items-center">
+                    <input id="password" type="password" required className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder="Enter password" value={user.password}
+                      onChange={(e) => setUser({ ...user, password: e.target.value })} />
+                  </div>
+                </div>
+
+                <div className="text-sm">
+                  <Link href="" className="text-blue-600 hover:underline font-semibold">
+                    Forgot your password?
+                  </Link>
+                </div>
+
+                <div className="!mt-8">
+                  <button onClick={onLogin} type="button" className="w-full py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
+                    {buttonDisabled ? "Please fill the form" : "Login"}
+                  </button>
+                </div>
+
+                <p className="text-gray-800 text-sm !mt-8 text-center">Visit signup page<Link href="/signup" className="text-blue-600 hover:underline ml-1 whitespace-nowrap font-semibold">Signup</Link></p>
+
+              </form>
+
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </>
   )
 }
-
-export default page
